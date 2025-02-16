@@ -1,0 +1,285 @@
+System Information Collection - Sun Feb  9 11:09:28 AM EET 2025
+=================================================
+
+=== System Information ===
+Date: Sun Feb  9 11:09:28 AM EET 2025
+Hostname: Debian-1208-bookworm-amd64-base
+Kernel: 6.8.12-8-pve
+
+=== Database Schema ===
+Users Table:
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL,
+    is_admin INTEGER DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+Shares Table:
+CREATE TABLE shares (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    token TEXT NOT NULL,
+    original_name TEXT NOT NULL,
+    created_at DATETIME NOT NULL,
+    expires_at DATETIME NOT NULL,
+    download_count INTEGER DEFAULT 0
+);
+
+=== File Structure and Permissions ===
+Main directory:
+total 92
+drwxr-xr-x 6 www-data www-data  4096 Feb  9 10:39 .
+drwxr-xr-x 4 root     root      4096 Feb  8 18:32 ..
+-rwxr-xr-x 1 www-data www-data  1230 Feb  8 23:37 download.php
+drwxr-xr-x 2 www-data www-data  4096 Feb  9 10:39 files
+-rw-r--r-- 1 root     root       134 Feb  8 23:37 .htaccess
+-rwxr-xr-x 1 www-data www-data 13480 Feb  8 23:34 index.php
+-rwxr-xr-x 1 www-data www-data    20 Feb  8 20:25 info.php
+-rwxr-xr-x 1 www-data www-data   632 Feb  8 20:03 init_db.php
+drwxr-xr-x 2 www-data www-data  4096 Feb  8 19:14 links
+drwxr-xr-x 2 www-data www-data  4096 Feb  9 11:09 logs
+-rwxr-xr-x 1 www-data www-data 20480 Feb  9 10:39 shares.db
+-rw-r--r-- 1 root     root       815 Feb  8 23:25 upload.php
+drwxr-xr-x 2 www-data www-data  4096 Feb  9 09:57 uploads
+-rw-r--r-- 1 root     root      8672 Feb  8 21:03 users.php
+
+Files directory:
+total 2571188
+drwxr-xr-x 2 www-data www-data       4096 Feb  9 10:39 .
+drwxr-xr-x 6 www-data www-data       4096 Feb  9 10:39 ..
+-rw-r--r-- 1 www-data www-data 2630877184 Feb  9 10:04 boot-repair-disk-64bit.iso
+-rw-r--r-- 1 www-data www-data    1001601 Feb  9 10:39 getbill-2.pdf
+-rw-r--r-- 1 www-data www-data    1001601 Feb  8 23:38 getbill.pdf
+
+Uploads directory:
+total 8
+drwxr-xr-x 2 www-data www-data 4096 Feb  9 09:57 .
+drwxr-xr-x 6 www-data www-data 4096 Feb  9 10:39 ..
+
+Links directory:
+total 24
+drwxr-xr-x 2 www-data www-data 4096 Feb  8 19:14 .
+drwxr-xr-x 6 www-data www-data 4096 Feb  9 10:39 ..
+-rwxr-xr-x 1 www-data www-data   22 Feb  8 18:44 6PKvwXX6pWNVGcYm3m7vdvnYyoJm3ncY
+-rwxr-xr-x 1 www-data www-data   22 Feb  8 19:14 D4IKxecea3wE3moAw36tjQMiqzmAjZRM
+-rwxr-xr-x 1 www-data www-data   31 Feb  8 19:01 QcULIOmfyXVe4fzjlf75zQgjpF0wRVm0.txt
+-rwxr-xr-x 1 www-data www-data   22 Feb  8 19:10 zs9DoRk55FbfgJLQjJ1Y3WjMbz4y3YK4
+
+Logs directory:
+total 20
+drwxr-xr-x 2 www-data www-data 4096 Feb  9 11:09 .
+drwxr-xr-x 6 www-data www-data 4096 Feb  9 10:39 ..
+-rwxr-xr-x 1 www-data www-data 3467 Feb  9 10:39 access.log
+-rw-r--r-- 1 root     root        0 Feb  9 09:27 download.log
+-rwxr-xr-x 1 www-data www-data 1837 Feb  8 19:14 downloads.log
+-rwxr-xr-x 1 www-data www-data    0 Feb  9 09:27 error.log
+-rw-r--r-- 1 root     root     2592 Feb  9 11:09 system_info_20250209_110928.log
+-rw-r--r-- 1 www-data www-data    0 Feb  9 09:56 upload.log
+
+=== Web Server Configuration ===
+Nginx configuration:
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    server_name _;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl default_server;
+    listen [::]:443 ssl default_server;
+    include snippets/self-signed.conf;
+    include snippets/ssl-params.conf;
+
+    root /var/www/share;
+    index index.php index.html;
+
+    server_name _;
+
+    access_log /var/www/share/logs/access.log main;
+    error_log /var/www/share/logs/error.log;
+
+    location ~ ^/files/([^/]+)$ {
+        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root/download.php;
+        fastcgi_param QUERY_STRING token=$1;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location /upload {
+        # Configuration for handling file uploads
+    }
+}
+=== SSL Configuration ===
+
+=== Database Statistics ===
+Total users:
+2
+Active shares:
+1
+Expired shares:
+0
+
+=== Disk Usage ===
+Files directory size:
+2.5G	/var/www/share/files/
+Uploads directory size:
+4.0K	/var/www/share/uploads/
+Total disk usage:
+2.5G	/var/www/share/
+
+=== PHP Configuration ===
+PHP upload limits:
+grep: /etc/php/*/apache2/php.ini: No such file or directory
+post_max_size = 8M
+upload_max_filesize = 2M
+upload_max_filesize = 100G
+post_max_size = 100G
+
+=== Running Services ===
+Web server processes:
+100000     12277  0.0  0.0 198880 44344 ?        Ss   Feb08   0:02 /usr/sbin/apache2 -k start
+100000     12279  0.0  0.0  56920  1944 ?        Ss   Feb08   0:00 nginx: master process /usr/sbin/nginx -g daemon on; master_process on;
+100033     12281  0.0  0.0  57496  4760 ?        S    Feb08   0:00 nginx: worker process
+100033     12282  0.0  0.0  57628  5272 ?        S    Feb08   0:00 nginx: worker process
+100033     12283  0.0  0.0  57496  4760 ?        S    Feb08   0:00 nginx: worker process
+100033     12284  0.0  0.0  57496  5272 ?        S    Feb08   0:00 nginx: worker process
+100033     12285  0.0  0.0  57496  4760 ?        S    Feb08   0:00 nginx: worker process
+100033     12287  0.0  0.0  57496  4760 ?        S    Feb08   0:00 nginx: worker process
+100033     12288  0.0  0.0  57496  4764 ?        S    Feb08   0:00 nginx: worker process
+100033     12289  0.0  0.0  57496  4764 ?        S    Feb08   0:00 nginx: worker process
+100000     13292  0.0  0.0  56920  2424 ?        Ss   Feb08   0:00 nginx: master process /usr/sbin/nginx -g daemon on; master_process on;
+100033     13297  0.0  0.0  57580  5752 ?        S    Feb08   0:13 nginx: worker process
+100033     13299  0.0  0.0  57496  5496 ?        S    Feb08   0:00 nginx: worker process
+100033     13301  0.0  0.0  57496  5496 ?        S    Feb08   0:00 nginx: worker process
+100033     13302  0.0  0.0  57496  5752 ?        S    Feb08   0:00 nginx: worker process
+100033     13303  0.0  0.0  57496  5496 ?        S    Feb08   0:00 nginx: worker process
+100033     13304  0.0  0.0  57496  5240 ?        S    Feb08   0:00 nginx: worker process
+100033     13305  0.0  0.0  57496  5244 ?        S    Feb08   0:00 nginx: worker process
+100033     13306  0.0  0.0  57496  5500 ?        S    Feb08   0:00 nginx: worker process
+100000     13309  0.0  0.0 198932 44124 ?        Ss   Feb08   0:02 /usr/sbin/apache2 -k start
+100000     27905  0.0  0.0 166092 43164 ?        Ss   Feb08   0:08 /usr/sbin/apache2 -k start
+100000     28204  0.0  0.0 221980  6668 ?        Ss   Feb08   0:00 nginx: master process /usr/sbin/nginx -g daemon on; master_process on;
+100033     28206  0.0  0.0 222732 10256 ?        S    Feb08   0:00 nginx: worker process
+100033     28207  0.0  0.0 222732 10256 ?        S    Feb08   0:00 nginx: worker process
+100033     28209  0.0  0.0 222732 10256 ?        S    Feb08   0:00 nginx: worker process
+100033     28213  0.0  0.0 222732 10256 ?        S    Feb08   0:00 nginx: worker process
+100033     28214  0.0  0.0 222732 10256 ?        S    Feb08   0:00 nginx: worker process
+100033     28216  0.0  0.0 222732 10000 ?        S    Feb08   0:00 nginx: worker process
+100033     28217  0.0  0.0 222732 10256 ?        S    Feb08   0:00 nginx: worker process
+100033     28219  0.0  0.0 222732 10256 ?        S    Feb08   0:00 nginx: worker process
+100000    536317  0.0  0.0 166092 42500 ?        Ss   Feb08   0:02 /usr/sbin/apache2 -k start
+100000    536327  0.0  0.0 221980  6672 ?        Ss   Feb08   0:00 nginx: master process /usr/sbin/nginx -g daemon on; master_process on;
+100033    536328  0.0  0.0 222732 10256 ?        S    Feb08   0:00 nginx: worker process
+100033    536329  0.0  0.0 222732 10000 ?        S    Feb08   0:00 nginx: worker process
+100033    536330  0.0  0.0 222732 10256 ?        S    Feb08   0:00 nginx: worker process
+100033    536332  0.0  0.0 222732 10256 ?        S    Feb08   0:00 nginx: worker process
+100033    536333  0.0  0.0 222732 10256 ?        S    Feb08   0:00 nginx: worker process
+100033    536335  0.0  0.0 222732 10512 ?        S    Feb08   0:00 nginx: worker process
+100033    536337  0.0  0.0 222732 10000 ?        S    Feb08   0:00 nginx: worker process
+100033    536339  0.0  0.0 222732 10000 ?        S    Feb08   0:00 nginx: worker process
+100033    880190  0.0  0.0 420852 37312 ?        S    00:00   0:00 /usr/sbin/apache2 -k start
+100033    880191  0.0  0.0 420380 36540 ?        S    00:00   0:00 /usr/sbin/apache2 -k start
+100033    880192  0.0  0.0 426032 44876 ?        S    00:00   0:00 /usr/sbin/apache2 -k start
+100033    880193  0.0  0.0 418776 35004 ?        S    00:00   0:00 /usr/sbin/apache2 -k start
+100033    880194  0.0  0.0 421952 40620 ?        S    00:00   0:00 /usr/sbin/apache2 -k start
+100033    880295  0.0  0.0 418608 42116 ?        S    00:00   0:27 /usr/sbin/apache2 -k start
+100033    880296  0.0  0.0 417148 38728 ?        S    00:00   0:27 /usr/sbin/apache2 -k start
+100033    880298  0.0  0.0 419228 40628 ?        S    00:00   0:27 /usr/sbin/apache2 -k start
+100033    880299  0.0  0.0 419172 40696 ?        S    00:00   0:27 /usr/sbin/apache2 -k start
+100033    880301  0.0  0.0 417240 38388 ?        S    00:00   0:28 /usr/sbin/apache2 -k start
+100033    880515  0.0  0.0 166620 16312 ?        S    00:00   0:00 /usr/sbin/apache2 -k start
+100033    880516  0.0  0.0 166620 16312 ?        S    00:00   0:00 /usr/sbin/apache2 -k start
+100033    880517  0.0  0.0 166620 16312 ?        S    00:00   0:00 /usr/sbin/apache2 -k start
+100033    880518  0.0  0.0 166620 16312 ?        S    00:00   0:00 /usr/sbin/apache2 -k start
+100033    880520  0.0  0.0 166620 16312 ?        S    00:00   0:00 /usr/sbin/apache2 -k start
+100033    881263  0.0  0.0 418244 40480 ?        S    00:00   0:27 /usr/sbin/apache2 -k start
+100033   1071533  0.0  0.0 420308 35260 ?        S    04:49   0:00 /usr/sbin/apache2 -k start
+100033   1122668  0.0  0.0 417204 38520 ?        S    06:08   0:12 /usr/sbin/apache2 -k start
+100000   1378540  0.0  0.0 198880 42100 ?        Ss   08:26   0:00 /usr/sbin/apache2 -k start
+100000   1378553  0.0  0.0  56920  2432 ?        Ss   08:26   0:00 nginx: master process /usr/sbin/nginx -g daemon on; master_process on;
+100033   1378560  0.0  0.0  57584  5248 ?        S    08:26   0:00 nginx: worker process
+100033   1378561  0.0  0.0  57584  5248 ?        S    08:26   0:00 nginx: worker process
+100033   1378563  0.0  0.0  57584  5760 ?        S    08:26   0:00 nginx: worker process
+100033   1378565  0.0  0.0  57584  6016 ?        S    08:26   0:00 nginx: worker process
+100033   1378567  0.0  0.0  57584  5504 ?        S    08:26   0:00 nginx: worker process
+100033   1378568  0.0  0.0  57584  4992 ?        S    08:26   0:00 nginx: worker process
+100033   1378570  0.0  0.0  57584  5508 ?        S    08:26   0:00 nginx: worker process
+100033   1378571  0.0  0.0  57584  6020 ?        S    08:26   0:00 nginx: worker process
+100033   1378674  0.0  0.0 417960 47196 ?        S    08:26   0:01 /usr/sbin/apache2 -k start
+100033   1378676  0.0  0.0 416888 40936 ?        S    08:26   0:01 /usr/sbin/apache2 -k start
+100033   1378677  0.0  0.0 418204 45632 ?        S    08:26   0:02 /usr/sbin/apache2 -k start
+100033   1378679  0.0  0.0 491352 45092 ?        S    08:26   0:01 /usr/sbin/apache2 -k start
+100033   1378682  0.0  0.0 416664 40332 ?        S    08:26   0:01 /usr/sbin/apache2 -k start
+100033   1460343  0.0  0.0 416948 43912 ?        S    08:44   0:01 /usr/sbin/apache2 -k start
+100033   1501962  0.0  0.0 419140 39600 ?        S    09:40   0:05 /usr/sbin/apache2 -k start
+root     1510825  0.0  0.0 206104 21248 ?        Ss   09:55   0:00 php-fpm: master process (/etc/php/8.2/fpm/php-fpm.conf)
+www-data 1510826  0.0  0.0 206604 16120 ?        S    09:55   0:00 php-fpm: pool www
+www-data 1510827  0.0  0.0 206604 13312 ?        S    09:55   0:01 php-fpm: pool www
+www-data 1510828  0.0  0.0 206604 13824 ?        S    09:55   0:00 php-fpm: pool www
+www-data 1510829  0.0  0.0 206604 13568 ?        S    09:55   0:00 php-fpm: pool www
+www-data 1510830  0.0  0.0 206604 14884 ?        S    09:55   0:00 php-fpm: pool www
+www-data 1526388  0.0  0.0 206604 13568 ?        S    10:04   0:00 php-fpm: pool www
+root     1564022  0.0  0.0 252748  7956 ?        Ss   10:39   0:00 nginx: master process /usr/sbin/nginx -g daemon on; master_process on;
+www-data 1564023  0.0  0.0 253704 16660 ?        S    10:39   0:00 nginx: worker process
+www-data 1564024  0.0  0.0 253652 13416 ?        S    10:39   0:00 nginx: worker process
+www-data 1564025  0.0  0.0 253652 13076 ?        S    10:39   0:00 nginx: worker process
+www-data 1564026  0.0  0.0 253652 13332 ?        S    10:39   0:00 nginx: worker process
+www-data 1564027  0.0  0.0 253652 13332 ?        S    10:39   0:00 nginx: worker process
+www-data 1564028  0.0  0.0 253652 13332 ?        S    10:39   0:00 nginx: worker process
+www-data 1564029  0.0  0.0 253652 13332 ?        S    10:39   0:00 nginx: worker process
+www-data 1564030  0.0  0.0 253652 13332 ?        S    10:39   0:00 nginx: worker process
+www-data 1564031  0.0  0.0 253652 13332 ?        S    10:39   0:00 nginx: worker process
+www-data 1564032  0.0  0.0 253652 13332 ?        S    10:39   0:00 nginx: worker process
+www-data 1564033  0.0  0.0 253652 13332 ?        S    10:39   0:00 nginx: worker process
+www-data 1564034  0.0  0.0 253652 13332 ?        S    10:39   0:00 nginx: worker process
+www-data 1564035  0.0  0.0 253652 13332 ?        S    10:39   0:00 nginx: worker process
+www-data 1564036  0.0  0.0 253652 13332 ?        S    10:39   0:00 nginx: worker process
+www-data 1564037  0.0  0.0 253652 13332 ?        S    10:39   0:00 nginx: worker process
+www-data 1564038  0.0  0.0 253652 13332 ?        S    10:39   0:00 nginx: worker process
+www-data 1564039  0.0  0.0 253652 13332 ?        S    10:39   0:00 nginx: worker process
+www-data 1564040  0.0  0.0 253652 13332 ?        S    10:39   0:00 nginx: worker process
+www-data 1564041  0.0  0.0 253652 13336 ?        S    10:39   0:00 nginx: worker process
+www-data 1564042  0.0  0.0 253652 13336 ?        S    10:39   0:00 nginx: worker process
+www-data 1564043  0.0  0.0 253652 13336 ?        S    10:39   0:00 nginx: worker process
+www-data 1564044  0.0  0.0 253652 13080 ?        S    10:39   0:00 nginx: worker process
+www-data 1564045  0.0  0.0 253652 13336 ?        S    10:39   0:00 nginx: worker process
+www-data 1564046  0.0  0.0 253652 13336 ?        S    10:39   0:00 nginx: worker process
+www-data 1564047  0.0  0.0 253652 13336 ?        S    10:39   0:00 nginx: worker process
+www-data 1564048  0.0  0.0 253652 13336 ?        S    10:39   0:00 nginx: worker process
+www-data 1564049  0.0  0.0 253652 13336 ?        S    10:39   0:00 nginx: worker process
+www-data 1564050  0.0  0.0 253652 13336 ?        S    10:39   0:00 nginx: worker process
+www-data 1564051  0.0  0.0 253652 13336 ?        S    10:39   0:00 nginx: worker process
+www-data 1564052  0.0  0.0 253652 13336 ?        S    10:39   0:00 nginx: worker process
+www-data 1564053  0.0  0.0 253652 13336 ?        S    10:39   0:00 nginx: worker process
+www-data 1564054  0.0  0.0 253652 13336 ?        S    10:39   0:00 nginx: worker process
+100033   1581090  0.0  0.0 167508 26724 ?        S    11:04   0:00 /usr/sbin/apache2 -k start
+100033   1581122  0.0  0.0 167508 26236 ?        S    11:04   0:00 /usr/sbin/apache2 -k start
+100033   1581125  0.0  0.0 169620 28544 ?        S    11:04   0:00 /usr/sbin/apache2 -k start
+100033   1581139  0.0  0.0 167572 26484 ?        S    11:04   0:00 /usr/sbin/apache2 -k start
+100033   1581146  0.0  0.0 167508 26560 ?        S    11:04   0:00 /usr/sbin/apache2 -k start
+100033   1581148  0.0  0.0 167568 26452 ?        S    11:04   0:00 /usr/sbin/apache2 -k start
+100033   1581149  0.0  0.0 167568 26964 ?        S    11:04   0:00 /usr/sbin/apache2 -k start
+100033   1581153  0.0  0.0 167568 26984 ?        S    11:04   0:00 /usr/sbin/apache2 -k start
+100033   1582202  0.0  0.0 169572 29292 ?        S    11:06   0:00 /usr/sbin/apache2 -k start
+100033   1582847  0.0  0.0 167372 26436 ?        S    11:07   0:00 /usr/sbin/apache2 -k start
+
+=== Security Configuration ===
+Fail2ban status:
+Status
+|- Number of jail:	3
+`- Jail list:	openvpn, proxmox, sshd

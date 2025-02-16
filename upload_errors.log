@@ -1,0 +1,374 @@
+[2025-02-14 20:44:21] Upload script started
+[2025-02-14 20:44:21] POST data received: Array
+(
+    [folder] => 
+)
+
+[2025-02-14 20:44:21] FILES data received: Array
+(
+    [fileToUpload] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                )
+
+        )
+
+    [folderUpload] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 1_89156626012566.pdf
+                    [1] => 2_89156626012566_1.pdf
+                    [2] => 3_89156626012566.pdf
+                    [3] => 4_891566260125662.pdf
+                    [4] => 5_89156626012566.pdf
+                    [5] => 6_89156626012566_1.pdf
+                    [6] => 7_89156626012566.pdf
+                    [7] => 8_891566260125662.pdf
+                    [8] => 9_New Text Document.txt
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 1_234325345345_files/1_89156626012566.pdf
+                    [1] => 1_234325345345_files/2_89156626012566_1.pdf
+                    [2] => 1_234325345345_files/3_89156626012566.pdf
+                    [3] => 1_234325345345_files/4_891566260125662.pdf
+                    [4] => 1_234325345345_files/5_89156626012566.pdf
+                    [5] => 1_234325345345_files/6_89156626012566_1.pdf
+                    [6] => 1_234325345345_files/7_89156626012566.pdf
+                    [7] => 1_234325345345_files/8_891566260125662.pdf
+                    [8] => 1_234325345345_files/9_New Text Document.txt
+                )
+
+            [type] => Array
+                (
+                    [0] => application/pdf
+                    [1] => application/pdf
+                    [2] => application/pdf
+                    [3] => application/pdf
+                    [4] => application/pdf
+                    [5] => application/pdf
+                    [6] => application/pdf
+                    [7] => application/pdf
+                    [8] => text/plain
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => /tmp/phpLzPvbp
+                    [1] => /tmp/php1Sepvs
+                    [2] => /tmp/phpxozsUC
+                    [3] => /tmp/phpEkeQLM
+                    [4] => /tmp/phpZEce4q
+                    [5] => /tmp/phplvjDfL
+                    [6] => /tmp/php8phqBI
+                    [7] => /tmp/phpgbWTbW
+                    [8] => /tmp/phpPAszu0
+                )
+
+            [error] => Array
+                (
+                    [0] => 0
+                    [1] => 0
+                    [2] => 0
+                    [3] => 0
+                    [4] => 0
+                    [5] => 0
+                    [6] => 0
+                    [7] => 0
+                    [8] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 79704
+                    [1] => 79704
+                    [2] => 79704
+                    [3] => 79704
+                    [4] => 79704
+                    [5] => 79704
+                    [6] => 79704
+                    [7] => 79704
+                    [8] => 0
+                )
+
+        )
+
+)
+
+[2025-02-14 20:44:21] Starting file processing
+[2025-02-14 20:44:21] Target base directory: files/shared/
+[2025-02-14 20:44:21] Processing 9 files
+[2025-02-14 20:44:21] Sanitized path: 1_89156626012566.pdf -> 1_89156626012566.pdf
+[2025-02-14 20:44:21] Sanitized path: 2_89156626012566_1.pdf -> 2_89156626012566_1.pdf
+[2025-02-14 20:44:21] Sanitized path: 3_89156626012566.pdf -> 3_89156626012566.pdf
+[2025-02-14 20:44:21] Sanitized path: 4_891566260125662.pdf -> 4_891566260125662.pdf
+[2025-02-14 20:44:21] Sanitized path: 5_89156626012566.pdf -> 5_89156626012566.pdf
+[2025-02-14 20:44:21] Sanitized path: 6_89156626012566_1.pdf -> 6_89156626012566_1.pdf
+[2025-02-14 20:44:21] Sanitized path: 7_89156626012566.pdf -> 7_89156626012566.pdf
+[2025-02-14 20:44:21] Sanitized path: 8_891566260125662.pdf -> 8_891566260125662.pdf
+[2025-02-14 20:44:21] Sanitized path: 9_New Text Document.txt -> 9_New Text Document.txt
+[2025-02-14 20:44:21] Processing chunk 0 to 9
+[2025-02-14 20:44:21] Sanitized path: 1_89156626012566.pdf -> 1_89156626012566.pdf
+[2025-02-14 20:44:21] Processing file 0: 1_89156626012566.pdf
+[2025-02-14 20:44:21] Temporary file location: /tmp/phpLzPvbp
+[2025-02-14 20:44:21] Target location: files/shared/1_89156626012566.pdf
+[2025-02-14 20:44:21] Successfully moved file: 1_89156626012566.pdf
+[2025-02-14 20:44:21] Sanitized path: 2_89156626012566_1.pdf -> 2_89156626012566_1.pdf
+[2025-02-14 20:44:21] Processing file 1: 2_89156626012566_1.pdf
+[2025-02-14 20:44:21] Temporary file location: /tmp/php1Sepvs
+[2025-02-14 20:44:21] Target location: files/shared/2_89156626012566_1.pdf
+[2025-02-14 20:44:21] Successfully moved file: 2_89156626012566_1.pdf
+[2025-02-14 20:44:21] Sanitized path: 3_89156626012566.pdf -> 3_89156626012566.pdf
+[2025-02-14 20:44:21] Processing file 2: 3_89156626012566.pdf
+[2025-02-14 20:44:21] Temporary file location: /tmp/phpxozsUC
+[2025-02-14 20:44:21] Target location: files/shared/3_89156626012566.pdf
+[2025-02-14 20:44:21] Successfully moved file: 3_89156626012566.pdf
+[2025-02-14 20:44:21] Sanitized path: 4_891566260125662.pdf -> 4_891566260125662.pdf
+[2025-02-14 20:44:21] Processing file 3: 4_891566260125662.pdf
+[2025-02-14 20:44:21] Temporary file location: /tmp/phpEkeQLM
+[2025-02-14 20:44:21] Target location: files/shared/4_891566260125662.pdf
+[2025-02-14 20:44:21] Successfully moved file: 4_891566260125662.pdf
+[2025-02-14 20:44:21] Sanitized path: 5_89156626012566.pdf -> 5_89156626012566.pdf
+[2025-02-14 20:44:21] Processing file 4: 5_89156626012566.pdf
+[2025-02-14 20:44:21] Temporary file location: /tmp/phpZEce4q
+[2025-02-14 20:44:21] Target location: files/shared/5_89156626012566.pdf
+[2025-02-14 20:44:21] Successfully moved file: 5_89156626012566.pdf
+[2025-02-14 20:44:21] Sanitized path: 6_89156626012566_1.pdf -> 6_89156626012566_1.pdf
+[2025-02-14 20:44:21] Processing file 5: 6_89156626012566_1.pdf
+[2025-02-14 20:44:21] Temporary file location: /tmp/phplvjDfL
+[2025-02-14 20:44:21] Target location: files/shared/6_89156626012566_1.pdf
+[2025-02-14 20:44:21] Successfully moved file: 6_89156626012566_1.pdf
+[2025-02-14 20:44:21] Sanitized path: 7_89156626012566.pdf -> 7_89156626012566.pdf
+[2025-02-14 20:44:21] Processing file 6: 7_89156626012566.pdf
+[2025-02-14 20:44:21] Temporary file location: /tmp/php8phqBI
+[2025-02-14 20:44:21] Target location: files/shared/7_89156626012566.pdf
+[2025-02-14 20:44:21] Successfully moved file: 7_89156626012566.pdf
+[2025-02-14 20:44:21] Sanitized path: 8_891566260125662.pdf -> 8_891566260125662.pdf
+[2025-02-14 20:44:21] Processing file 7: 8_891566260125662.pdf
+[2025-02-14 20:44:21] Temporary file location: /tmp/phpgbWTbW
+[2025-02-14 20:44:21] Target location: files/shared/8_891566260125662.pdf
+[2025-02-14 20:44:21] Successfully moved file: 8_891566260125662.pdf
+[2025-02-14 20:44:21] Sanitized path: 9_New Text Document.txt -> 9_New Text Document.txt
+[2025-02-14 20:44:21] Processing file 8: 9_New Text Document.txt
+[2025-02-14 20:44:21] Temporary file location: /tmp/phpPAszu0
+[2025-02-14 20:44:21] Target location: files/shared/9_New Text Document.txt
+[2025-02-14 20:44:21] Successfully moved file: 9_New Text Document.txt
+[2025-02-14 20:44:21] Memory usage after chunk: 2MB
+[2025-02-14 20:44:21] Upload complete. Success: 9, Errors: 0
+[2025-02-14 20:44:21] Updating database
+[2025-02-14 20:45:20] Upload script started
+[2025-02-14 20:45:20] POST data received: Array
+(
+    [folder] => 
+)
+
+[2025-02-14 20:45:20] FILES data received: Array
+(
+    [fileToUpload] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 
+                )
+
+            [type] => Array
+                (
+                    [0] => 
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => 
+                )
+
+            [error] => Array
+                (
+                    [0] => 4
+                )
+
+            [size] => Array
+                (
+                    [0] => 0
+                )
+
+        )
+
+    [folderUpload] => Array
+        (
+            [name] => Array
+                (
+                    [0] => 1_89156626012566.pdf
+                    [1] => 2_89156626012566_1.pdf
+                    [2] => 3_89156626012566.pdf
+                    [3] => 4_891566260125662.pdf
+                    [4] => 5_89156626012566.pdf
+                    [5] => 6_89156626012566_1.pdf
+                    [6] => 7_89156626012566.pdf
+                    [7] => 8_891566260125662.pdf
+                    [8] => 9_New Text Document.txt
+                )
+
+            [full_path] => Array
+                (
+                    [0] => 1_234325345345_files/1_89156626012566.pdf
+                    [1] => 1_234325345345_files/2_89156626012566_1.pdf
+                    [2] => 1_234325345345_files/3_89156626012566.pdf
+                    [3] => 1_234325345345_files/4_891566260125662.pdf
+                    [4] => 1_234325345345_files/5_89156626012566.pdf
+                    [5] => 1_234325345345_files/6_89156626012566_1.pdf
+                    [6] => 1_234325345345_files/7_89156626012566.pdf
+                    [7] => 1_234325345345_files/8_891566260125662.pdf
+                    [8] => 1_234325345345_files/9_New Text Document.txt
+                )
+
+            [type] => Array
+                (
+                    [0] => application/pdf
+                    [1] => application/pdf
+                    [2] => application/pdf
+                    [3] => application/pdf
+                    [4] => application/pdf
+                    [5] => application/pdf
+                    [6] => application/pdf
+                    [7] => application/pdf
+                    [8] => text/plain
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => /tmp/phpMzIeio
+                    [1] => /tmp/phpCWubXE
+                    [2] => /tmp/phpDHyRsV
+                    [3] => /tmp/phppavesG
+                    [4] => /tmp/phpZoKW8z
+                    [5] => /tmp/phpbUeYwU
+                    [6] => /tmp/phpbzvt5a
+                    [7] => /tmp/phpgh8Fvj
+                    [8] => /tmp/phpmk1wkY
+                )
+
+            [error] => Array
+                (
+                    [0] => 0
+                    [1] => 0
+                    [2] => 0
+                    [3] => 0
+                    [4] => 0
+                    [5] => 0
+                    [6] => 0
+                    [7] => 0
+                    [8] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 79704
+                    [1] => 79704
+                    [2] => 79704
+                    [3] => 79704
+                    [4] => 79704
+                    [5] => 79704
+                    [6] => 79704
+                    [7] => 79704
+                    [8] => 0
+                )
+
+        )
+
+)
+
+[2025-02-14 20:45:20] Starting file processing
+[2025-02-14 20:45:20] Target base directory: files/shared/
+[2025-02-14 20:45:20] Processing 9 files
+[2025-02-14 20:45:20] Sanitized path: 1_89156626012566.pdf -> 1_89156626012566.pdf
+[2025-02-14 20:45:20] Sanitized path: 2_89156626012566_1.pdf -> 2_89156626012566_1.pdf
+[2025-02-14 20:45:20] Sanitized path: 3_89156626012566.pdf -> 3_89156626012566.pdf
+[2025-02-14 20:45:20] Sanitized path: 4_891566260125662.pdf -> 4_891566260125662.pdf
+[2025-02-14 20:45:20] Sanitized path: 5_89156626012566.pdf -> 5_89156626012566.pdf
+[2025-02-14 20:45:20] Sanitized path: 6_89156626012566_1.pdf -> 6_89156626012566_1.pdf
+[2025-02-14 20:45:20] Sanitized path: 7_89156626012566.pdf -> 7_89156626012566.pdf
+[2025-02-14 20:45:20] Sanitized path: 8_891566260125662.pdf -> 8_891566260125662.pdf
+[2025-02-14 20:45:20] Sanitized path: 9_New Text Document.txt -> 9_New Text Document.txt
+[2025-02-14 20:45:20] Processing chunk 0 to 9
+[2025-02-14 20:45:20] Sanitized path: 1_89156626012566.pdf -> 1_89156626012566.pdf
+[2025-02-14 20:45:20] Processing file 0: 1_89156626012566.pdf
+[2025-02-14 20:45:20] Temporary file location: /tmp/phpMzIeio
+[2025-02-14 20:45:20] Target location: files/shared/1_89156626012566.pdf
+[2025-02-14 20:45:20] Successfully moved file: 1_89156626012566.pdf
+[2025-02-14 20:45:20] Sanitized path: 2_89156626012566_1.pdf -> 2_89156626012566_1.pdf
+[2025-02-14 20:45:20] Processing file 1: 2_89156626012566_1.pdf
+[2025-02-14 20:45:20] Temporary file location: /tmp/phpCWubXE
+[2025-02-14 20:45:20] Target location: files/shared/2_89156626012566_1.pdf
+[2025-02-14 20:45:20] Successfully moved file: 2_89156626012566_1.pdf
+[2025-02-14 20:45:20] Sanitized path: 3_89156626012566.pdf -> 3_89156626012566.pdf
+[2025-02-14 20:45:20] Processing file 2: 3_89156626012566.pdf
+[2025-02-14 20:45:20] Temporary file location: /tmp/phpDHyRsV
+[2025-02-14 20:45:20] Target location: files/shared/3_89156626012566.pdf
+[2025-02-14 20:45:20] Successfully moved file: 3_89156626012566.pdf
+[2025-02-14 20:45:20] Sanitized path: 4_891566260125662.pdf -> 4_891566260125662.pdf
+[2025-02-14 20:45:20] Processing file 3: 4_891566260125662.pdf
+[2025-02-14 20:45:20] Temporary file location: /tmp/phppavesG
+[2025-02-14 20:45:20] Target location: files/shared/4_891566260125662.pdf
+[2025-02-14 20:45:20] Successfully moved file: 4_891566260125662.pdf
+[2025-02-14 20:45:20] Sanitized path: 5_89156626012566.pdf -> 5_89156626012566.pdf
+[2025-02-14 20:45:20] Processing file 4: 5_89156626012566.pdf
+[2025-02-14 20:45:20] Temporary file location: /tmp/phpZoKW8z
+[2025-02-14 20:45:20] Target location: files/shared/5_89156626012566.pdf
+[2025-02-14 20:45:20] Successfully moved file: 5_89156626012566.pdf
+[2025-02-14 20:45:20] Sanitized path: 6_89156626012566_1.pdf -> 6_89156626012566_1.pdf
+[2025-02-14 20:45:20] Processing file 5: 6_89156626012566_1.pdf
+[2025-02-14 20:45:20] Temporary file location: /tmp/phpbUeYwU
+[2025-02-14 20:45:20] Target location: files/shared/6_89156626012566_1.pdf
+[2025-02-14 20:45:20] Successfully moved file: 6_89156626012566_1.pdf
+[2025-02-14 20:45:20] Sanitized path: 7_89156626012566.pdf -> 7_89156626012566.pdf
+[2025-02-14 20:45:20] Processing file 6: 7_89156626012566.pdf
+[2025-02-14 20:45:20] Temporary file location: /tmp/phpbzvt5a
+[2025-02-14 20:45:20] Target location: files/shared/7_89156626012566.pdf
+[2025-02-14 20:45:20] Successfully moved file: 7_89156626012566.pdf
+[2025-02-14 20:45:20] Sanitized path: 8_891566260125662.pdf -> 8_891566260125662.pdf
+[2025-02-14 20:45:20] Processing file 7: 8_891566260125662.pdf
+[2025-02-14 20:45:20] Temporary file location: /tmp/phpgh8Fvj
+[2025-02-14 20:45:20] Target location: files/shared/8_891566260125662.pdf
+[2025-02-14 20:45:20] Successfully moved file: 8_891566260125662.pdf
+[2025-02-14 20:45:20] Sanitized path: 9_New Text Document.txt -> 9_New Text Document.txt
+[2025-02-14 20:45:20] Processing file 8: 9_New Text Document.txt
+[2025-02-14 20:45:20] Temporary file location: /tmp/phpmk1wkY
+[2025-02-14 20:45:20] Target location: files/shared/9_New Text Document.txt
+[2025-02-14 20:45:20] Successfully moved file: 9_New Text Document.txt
+[2025-02-14 20:45:20] Memory usage after chunk: 2MB
+[2025-02-14 20:45:20] Upload complete. Success: 9, Errors: 0
+[2025-02-14 20:45:20] Updating database
